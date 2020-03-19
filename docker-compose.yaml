@@ -10,4 +10,33 @@ services:
     environment:
       - HOST=0.0.0.0
     volumes:
-    - .:/home/node/app
+      - .:/home/node/app
+    networks:
+      - app-network
+      - rabbitmq_micro-catalog
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    container_name: micro-catalog-elasticsearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./.docker/elasticdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - app-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    ports:
+      - 5601:5601
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+  rabbitmq_micro-catalog:
+    external: true
