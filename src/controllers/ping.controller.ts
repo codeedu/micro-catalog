@@ -72,14 +72,22 @@ export class PingController {
       headers: Object.assign({}, this.req.headers),
     };
   }
+  //avj module
 
   @get('/categories')
   async index(){
-    await this.categoryRepo.create({
-      id: '1',
-      name: 'minha primeira categoria',
-      description: 'minha descrição'
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data: any = {
+      id: '2',
+          name: 'minha primeira categoria',
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        created_at: new Date(),
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        updated_at: new Date(),
+      //description: 'minha descrição'
+    }
+    await this.categoryRepo.create(data);
+
     return this.categoryRepo.find()
   }
 }

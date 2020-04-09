@@ -13,6 +13,36 @@ export default {
         "pingTimeout": process.env.ELASTIC_SEARCH_PING_TIMEOUT
     },
     "mappingProperties": {
-
+        "docType": {
+            "type": "keyword",
+        },
+        "id": {
+            "type": "keyword",
+        },
+        "name": {
+            "type": "text", //analisado
+            "fields": {
+                "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                }
+            }
+        },
+        "is_active": {
+            "type": "boolean"
+        },
+        "created_at": {
+            "type": "date"
+        },
+        "updated_at": {
+            "type": "date"
+        }
     }
 }
+// date - 2020
+// date -
+// name.keyword
+
+//minha categoriaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+//name.keyword

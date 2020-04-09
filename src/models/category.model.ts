@@ -1,6 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
 
-
 @model() //Metadata
 export class Category extends Entity {
 
@@ -19,10 +18,22 @@ export class Category extends Entity {
   name: string;
 
   @property({
-    type: 'string',
+    type: 'boolean',
+    required: false,
   })
-  description?: string;
+  is_active: boolean = true;
 
+  @property({
+    type: 'date',
+    required: true,
+  })
+  created_at: Date;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  updated_at: Date;
 
   constructor(data?: Partial<Category>) {
     super(data);
