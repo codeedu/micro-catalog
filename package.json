@@ -54,6 +54,8 @@
     "@loopback/rest": "^2.0.0",
     "@loopback/rest-explorer": "^1.4.10",
     "@loopback/service-proxy": "^1.3.17",
+    "@types/amqplib": "^0.5.13",
+    "amqplib": "^0.5.5",
     "dotenv": "^8.2.0",
     "loopback-connector-esv6": "https://github.com/codeedu/loopback-connector-elastic-search/tarball/master"
   },

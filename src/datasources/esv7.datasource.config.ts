@@ -28,6 +28,9 @@ export default {
                 }
             }
         },
+        "description": {
+            "type": "text", //analisado
+        },
         "is_active": {
             "type": "boolean"
         },
