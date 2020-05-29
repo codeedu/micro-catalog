@@ -31,6 +31,9 @@ export default {
         "description": {
             "type": "text", //analisado
         },
+        "type": {
+            "type": "byte",
+        },
         "is_active": {
             "type": "boolean"
         },

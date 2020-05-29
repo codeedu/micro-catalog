@@ -1,28 +1,25 @@
 import {Binding, Context, inject} from "@loopback/context";
 import {Application, CoreBindings, Server} from "@loopback/core";
-import {ConfirmChannel, Options} from 'amqplib';
+import {Channel, ConfirmChannel, Message, Options} from 'amqplib';
 import {CategoryRepository} from "../repositories";
 import {repository} from "@loopback/repository";
 import {RabbitmqBindings} from "../keys";
 import {AmqpConnectionManager, AmqpConnectionManagerOptions, ChannelWrapper, connect} from 'amqp-connection-manager';
 import {MetadataInspector} from '@loopback/metadata';
 import {RABBITMQ_SUBSCRIBE_DECORATOR, RabbitmqSubscribeMetadata} from "../decorators/rabbitmq-subscribe.decorator";
-/*
- * - Disparar uma mensagem a cada evento de cada model do Laravel: criar, editar, excluir, relacionamentos
- * - Vários microsserviços poderão ser notificados dos eventos que ocorreram
- * - Alguns microsserviços poderão querer ser notificados somente de alguns eventos: "somente quando tem novos uploads"
- */
 
-/*
-* - ack - reconhecida
-* - nack - rejeitada
-* - unacked - esperado reconhecimento ou rejeição
- */
+
+export enum ResponseEnum {
+    ACK,
+    REQUEUE,
+    NACK
+}
 
 export interface RabbitmqConfig {
     uri: string;
     connOptions?: AmqpConnectionManagerOptions;
     exchanges?: { name: string, type: string, options?: Options.AssertExchange }[]
+    defaultHandlerError?: ResponseEnum
 }
 
 export class RabbitmqServer extends Context implements Server {
@@ -124,31 +121,50 @@ export class RabbitmqServer extends Context implements Server {
             }, [])
     }
 
+    //micro-catalog/sync-videos
+
     private async consume({channel, queue, method}: { channel: ConfirmChannel, queue: string, method: Function }) {
         await channel.consume(queue, async message => {
             try {
-                if(!message){
+                if (!message) {
                     throw new Error('Received null message');
                 }
 
                 const content = message.content;
-                if(content){
+                if (content) {
                     let data;
-                    try{
+                    try {
                         data = JSON.parse(content.toString());
-                    }catch (e) {
+                    } catch (e) {
                         data = null;
                     }
                     console.log(data);
 
-                    await method({data, message, channel});
-                    channel.ack(message);
+                    const responseType = await method({data, message, channel});
+                    this.dispatchResponse(channel, message, responseType);
                 }
             } catch (e) {
                 console.error(e);
-                //politica de resposta
+                if (!message) {
+                    return;
+                }
+                this.dispatchResponse(channel, message, this.config?.defaultHandlerError);
             }
         });
+    }
+
+    private dispatchResponse(channel: Channel, message: Message, responseType?: ResponseEnum) {
+        switch (responseType) {
+            case ResponseEnum.REQUEUE:
+                channel.nack(message, false, true);
+                break;
+            case ResponseEnum.NACK:
+                channel.nack(message, false, false);
+                break;
+            case ResponseEnum.ACK:
+            default:
+                channel.ack(message);
+        }
     }
 
     async stop(): Promise<void> {

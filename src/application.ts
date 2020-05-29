@@ -10,6 +10,7 @@ import {MySequence} from './sequence';
 import {RabbitmqServer} from "./servers";
 import {RestComponent, RestServer} from "@loopback/rest";
 import {RestExplorerComponent} from "./components";
+import {Category} from "./models";
 
 export class MicroCatalogApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(Application)),
