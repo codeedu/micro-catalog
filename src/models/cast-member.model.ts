@@ -2,16 +2,15 @@ import {Entity, model, property} from '@loopback/repository';
 
 export enum CastMemberType {
   DIRECTOR = 1,
-  ACTOR = 2
+  ACTOR = 2,
 }
 
 @model()
 export class CastMember extends Entity {
-
   @property({
     id: true,
     generated: false,
-    required: true
+    required: true,
   })
   id: string;
 
@@ -21,13 +20,16 @@ export class CastMember extends Entity {
     jsonSchema: {
       minLength: 1,
       maxLength: 255,
-    }
+    },
   })
   name: string;
 
   @property({
     type: 'number',
     required: true,
+    jsonSchema: {
+      enum: [CastMemberType.DIRECTOR, CastMemberType.ACTOR],
+    },
   })
   type: number;
 

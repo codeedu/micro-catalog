@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - '3001:3000'
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+
+  dockerize:
+    image: jwilder/dockerize

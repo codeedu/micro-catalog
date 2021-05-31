@@ -1,7 +1,7 @@
 import './bootstrap';
 import {MicroCatalogApplication} from './application';
 import {ApplicationConfig} from '@loopback/core';
-import {RestServer} from "@loopback/rest";
+import {RestServer} from '@loopback/rest';
 
 export {MicroCatalogApplication};
 
