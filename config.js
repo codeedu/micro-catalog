@@ -31,4 +31,8 @@ module.exports = {
       },
     ],
   },
+  jwt: {
+    secret:
+      '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx1BwufOtYWIh54C1xoru4lyqfnoarACe9b9grnIASE+KKNHthXc1KU9b64DjneIakfdn/6DsCm85hsFdOCI1OnAgs1u/5ujKK5gHwNkcMYJMYGIh+lPxUTcP32D5cRQ0DricO5mVt0kgz2deSaoQqV4cq+ev0FakdCmXK4lW7+mGTAbD3X0w5FfJpD+uHV42sZJFJSJ5mPDaOO9rDvAzT7w1SHYqkwQbRlDnj/7Yw/dFOXuTo124rueu6+z1Xkh112zp+eVp+cpxDzZTL6JoZvHMYfCD7I38NYNLRefbdUoWWdllUkx0WYBerI9IrC+Y2yxGIUW6lC6ZDgXgm8qE+wIDAQAB\n-----END PUBLIC KEY-----',
+  },
 };

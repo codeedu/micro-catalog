@@ -13,6 +13,18 @@ import {
   ValidatorsComponent,
 } from './components';
 import {ApiResourceProvider} from './providers/api-resource.provider';
+import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  JWTAuthenticationComponent,
+  TokenServiceBindings,
+} from '@loopback/authentication-jwt';
+import {JWTService} from './services/auth/jwt.service';
+import {
+  AuthorizationComponent,
+  AuthorizationDecision,
+  AuthorizationTags,
+} from '@loopback/authorization';
+import {SubscriberAuthorizationProvider} from './providers/subscriber-authorization.provider';
 
 export class MicroCatalogApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(Application)),
@@ -36,6 +48,20 @@ export class MicroCatalogApplication extends BootMixin(
     this.component(RestExplorerComponent);
     this.component(ValidatorsComponent);
     this.component(EntityComponent);
+    this.component(AuthenticationComponent);
+    this.component(JWTAuthenticationComponent);
+    this.bind(TokenServiceBindings.TOKEN_SERVICE).toClass(JWTService);
+    const bindings = this.component(AuthorizationComponent);
+
+    this.configure(bindings.key).to({
+      precedence: AuthorizationDecision.DENY,
+      defaultDecision: AuthorizationDecision.DENY,
+    });
+
+    this.bind('authorizationProviders.subscriber-provider')
+      .toProvider(SubscriberAuthorizationProvider)
+      .tag(AuthorizationTags.AUTHORIZER);
+
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
