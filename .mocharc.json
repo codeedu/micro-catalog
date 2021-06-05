@@ -1,4 +1,5 @@
 {
   "recursive": true,
+  "exit": true,
   "require": "source-map-support/register"
 }

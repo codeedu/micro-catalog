@@ -1,8 +1,12 @@
 import {Entity, model, property} from '@loopback/repository';
+export interface SmallCategory {
+  id: string;
+  name: string;
+  is_active: boolean;
+}
 
 @model() //Metadata
 export class Category extends Entity {
-
   @property({
     type: 'string',
     id: true,
@@ -14,20 +18,27 @@ export class Category extends Entity {
   @property({
     type: 'string',
     required: true,
+    jsonSchema: {
+      minLength: 1,
+      maxLength: 255,
+    },
   })
   name: string;
 
   @property({
     type: 'string',
     required: false,
-    default: ''
+    jsonSchema: {
+      nullable: true,
+    },
+    default: null,
   })
   description: string;
 
   @property({
     type: 'boolean',
     required: false,
-    default: true
+    default: true,
   })
   is_active: boolean;
 

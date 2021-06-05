@@ -8,9 +8,7 @@ export class CastMemberRepository extends DefaultCrudRepository<
   typeof CastMember.prototype.id,
   CastMemberRelations
 > {
-  constructor(
-    @inject('datasources.esv7') dataSource: Esv7DataSource,
-  ) {
+  constructor(@inject('datasources.esv7') dataSource: Esv7DataSource) {
     super(CastMember, dataSource);
   }
 }

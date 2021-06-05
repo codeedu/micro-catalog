@@ -1,10 +1,11 @@
 {
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "editor.tabCompletion": "on",
   "editor.tabSize": 2,
   "editor.trimAutoWhitespace": true,
   "editor.formatOnSave": true,
-
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
@@ -15,7 +16,6 @@
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-
   "typescript.tsdk": "./node_modules/typescript/lib",
   "eslint.run": "onSave",
   "eslint.nodePath": "./node_modules",
@@ -25,5 +25,18 @@
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#7288ff",
+    "activityBar.activeBorder": "#ffbfc9",
+    "activityBar.background": "#7288ff",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#ffbfc9",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#7288ff",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#3f5dff"
+  },
+  "peacock.remoteColor": "#3f5dff"
 }

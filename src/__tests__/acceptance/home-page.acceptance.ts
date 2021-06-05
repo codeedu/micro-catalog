@@ -29,3 +29,4 @@ describe('HomePage', () => {
       .expect(/<title>LoopBack API Explorer/);
   });
 });
+//lint eslint e prettier
